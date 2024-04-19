@@ -12,7 +12,7 @@ class OdontologoServiceTest {
     @Test
     void guardarOdontologoTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        Odontologo odontologo = new Odontologo("12345", "Juanse", "Peres");
+        Odontologo odontologo = new Odontologo("matricula10", "Julián", "Fernandez");
         Odontologo guardado = odontologoService.registrar(odontologo);
         Assertions.assertNotNull(guardado.getId());
     }
@@ -25,20 +25,34 @@ class OdontologoServiceTest {
     }
 
     @Test
-    void buscarOdontologoTest() {
+    void buscarOdontologoExistenteTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        Odontologo odontologo = new Odontologo("5678", "Laura", "Gomez");
-        Odontologo guardado = odontologoService.registrar(odontologo);
-        Odontologo encontrado = odontologoService.buscar(guardado.getId());
-        Assertions.assertEquals(guardado.getId(), encontrado.getId());
+        int idOdontologoABuscar = 9;
+        Odontologo encontrado = odontologoService.buscar(idOdontologoABuscar);
+        Assertions.assertNotNull(encontrado, "El odontólogo debe existir.");
+        Assertions.assertEquals(idOdontologoABuscar, encontrado.getId(), "El ID del odontólogo encontrado debe coincidir con el buscado.");
+        if (encontrado != null) {
+            System.out.println("Odontólogo encontrado:");
+            System.out.println("ID: " + encontrado.getId());
+            System.out.println("Matrícula: " + encontrado.getMatricula());
+            System.out.println("Nombre: " + encontrado.getNombre());
+            System.out.println("Apellido: " + encontrado.getApellido());
+        } else {
+            System.out.println("No se encontró el odontólogo con ID: " + idOdontologoABuscar);
+        }
     }
 
+
     @Test
-    void eliminarOdontologoTest() {
+    void eliminarOdontologoExistenteTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        Odontologo odontologo = new Odontologo("12345", "Juanse", "Peres");
-        Odontologo guardado = odontologoService.registrar(odontologo);
-        odontologoService.eliminar(guardado.getId());
-        Assertions.assertNull(odontologoService.buscar(guardado.getId()));
+        int idOdontologoAEliminar = 4;
+        Odontologo odontologoExistente = odontologoService.buscar(idOdontologoAEliminar);
+        Assertions.assertNotNull(odontologoExistente, "El odontólogo debe existir antes de ser eliminado.");
+
+        odontologoService.eliminar(idOdontologoAEliminar);
+
+        Assertions.assertNull(odontologoService.buscar(idOdontologoAEliminar), "El odontólogo debe ser null después de ser eliminado.");
     }
+
 }

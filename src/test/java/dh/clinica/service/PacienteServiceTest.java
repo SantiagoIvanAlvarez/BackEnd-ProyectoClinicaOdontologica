@@ -39,7 +39,7 @@ class PacienteServiceTest {
             PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
 
             // Crear y guardar un nuevo paciente
-            String uniqueDNI = "DNI" + System.currentTimeMillis(); // Asegura un DNI único
+            String uniqueDNI = "DNI" + System.currentTimeMillis(); // DNI único
             Paciente paciente = new Paciente("Ana", "Lopez", "Calle Verdadera 456", uniqueDNI, new Date());
             Paciente guardado = pacienteService.registrar(paciente);
             Assertions.assertNotNull(guardado.getId(), "El paciente debe ser guardado correctamente");
@@ -50,13 +50,5 @@ class PacienteServiceTest {
             // Verificar que el paciente fue eliminado
             Paciente eliminado = pacienteService.buscar(guardado.getId());
             Assertions.assertNull(eliminado, "El paciente debe ser null después de ser eliminado.");
-
-
-
-//        PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
-//        Paciente paciente = new Paciente("Miguel", "Diaz", "Avenida Siempre Viva 789", "19283746", new Date());
-//        Paciente guardado = pacienteService.registrar(paciente);
-//        pacienteService.eliminar(guardado.getId());
-//        Assertions.assertNull(pacienteService.buscar(guardado.getId()));
     }
 }
