@@ -1,7 +1,5 @@
 package dh.clinica.dao;
 
-import dh.clinica.model.Paciente;
-
 import java.util.List;
 
 public interface Idao<T> {

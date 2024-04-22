@@ -1,11 +1,10 @@
 package dh.clinica.service;
-
 import dh.clinica.dao.impl.PacienteDaoH2;
 import dh.clinica.model.Paciente;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 class PacienteServiceTest {
@@ -13,7 +12,7 @@ class PacienteServiceTest {
     @Test
     void guardarPacienteTest() {
         PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
-        Paciente paciente = new Paciente("Ana", "Lopez", "Calle Verdadera 456", "98765432", new Date());
+        Paciente paciente = new Paciente("Lucas", "Velazquez", "Calle unica 502", "67899432", LocalDate.now());
         Paciente guardado = pacienteService.registrar(paciente);
         Assertions.assertNotNull(guardado.getId());
     }
@@ -26,29 +25,34 @@ class PacienteServiceTest {
     }
 
     @Test
-    void buscarPacienteTest() {
+    void buscarPacienteExistenteTest() {
         PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
-        Paciente paciente = new Paciente("Ana", "Lopez", "Calle Verdadera 456", "98765432", new Date());
-        Paciente guardado = pacienteService.registrar(paciente);
-        Paciente encontrado = pacienteService.buscar(guardado.getId());
-        Assertions.assertEquals(guardado.getId(), encontrado.getId());
+        int idPacienteABuscar = 21;
+
+        Paciente encontrado = pacienteService.buscar(idPacienteABuscar);
+        Assertions.assertNotNull(encontrado, "El paciente debe existir.");
+        Assertions.assertEquals(idPacienteABuscar, encontrado.getId(), "El ID del paciente encontrado debe coincidir con el buscado.");
+        if (encontrado != null) {
+            System.out.println("Paciente encontrado:");
+            System.out.println("ID: " + encontrado.getId());
+            System.out.println("Fecha_alta: " + encontrado.getFechaAlta());
+            System.out.println("Domicilio: " + encontrado.getDomicilio());
+            System.out.println("Nombre: " + encontrado.getNombre());
+            System.out.println("Apellido: " + encontrado.getApellido());
+        } else {
+            System.out.println("No se encontró el paciente con ID: " + idPacienteABuscar);
+        }
     }
 
     @Test
-    void eliminarPacienteTest() {
-            PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
+    void eliminarPacienteExistenteTest() {
+        PacienteService pacienteService = new PacienteService(new PacienteDaoH2());
+        int idPacienteAEliminar = 21;
+        Paciente pacienteExistente = pacienteService.buscar(idPacienteAEliminar);
+        Assertions.assertNotNull(pacienteExistente, "El paciente debe existir antes de ser eliminado.");
 
-            // Crear y guardar un nuevo paciente
-            String uniqueDNI = "DNI" + System.currentTimeMillis(); // DNI único
-            Paciente paciente = new Paciente("Ana", "Lopez", "Calle Verdadera 456", uniqueDNI, new Date());
-            Paciente guardado = pacienteService.registrar(paciente);
-            Assertions.assertNotNull(guardado.getId(), "El paciente debe ser guardado correctamente");
+        pacienteService.eliminar(idPacienteAEliminar);
 
-            // Eliminar el paciente
-            pacienteService.eliminar(guardado.getId());
-
-            // Verificar que el paciente fue eliminado
-            Paciente eliminado = pacienteService.buscar(guardado.getId());
-            Assertions.assertNull(eliminado, "El paciente debe ser null después de ser eliminado.");
+        Assertions.assertNull(pacienteService.buscar(idPacienteAEliminar), "El paciente debe ser null después de ser eliminado.");
     }
 }

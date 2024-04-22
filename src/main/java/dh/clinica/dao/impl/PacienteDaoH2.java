@@ -11,7 +11,7 @@ import java.util.List;
 public class PacienteDaoH2 implements Idao<Paciente> {
 
     private final static String DB_JDBC_DRIVER = "org.h2.Driver";
-    private final static String DB_URL = "jdbc:h2:~/clinica_dh;INIT=RUNSCRIPT FROM 'classpath:init.sql'";
+    private final static String DB_URL = "jdbc:h2:~/clinica_dh;INIT=RUNSCRIPT FROM 'classpath:create.sql'";
     private final static String DB_USER = "sa";
     private final static String DB_PASSWORD = "sa";
     private static final Logger LOGGER = Logger.getLogger(PacienteDaoH2.class);
@@ -27,7 +27,7 @@ public class PacienteDaoH2 implements Idao<Paciente> {
             preparedStatement.setString(2, paciente.getApellido());
             preparedStatement.setString(3, paciente.getDomicilio());
             preparedStatement.setString(4, paciente.getDni());
-            preparedStatement.setDate(5, new Date(paciente.getFechaAlta().getTime()));
+            preparedStatement.setDate(5, java.sql.Date.valueOf(paciente.getFechaAlta()));
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -67,7 +67,7 @@ public class PacienteDaoH2 implements Idao<Paciente> {
                         resultSet.getString("apellido"),
                         resultSet.getString("domicilio"),
                         resultSet.getString("dni"),
-                        resultSet.getDate("fecha_alta")
+                        resultSet.getDate("fecha_alta").toLocalDate()
                 );
                 paciente.setId(resultSet.getInt("id"));
                 pacientes.add(paciente);
@@ -97,11 +97,12 @@ public class PacienteDaoH2 implements Idao<Paciente> {
 
             if (resultSet.next()) {
                 return new Paciente(
+                        resultSet.getInt("id"),
                         resultSet.getString("nombre"),
                         resultSet.getString("apellido"),
                         resultSet.getString("domicilio"),
                         resultSet.getString("dni"),
-                        resultSet.getDate("fecha_alta")
+                        resultSet.getDate("fecha_alta").toLocalDate()
                 );
             }
         } catch (SQLException e) {

@@ -12,7 +12,7 @@ class OdontologoServiceTest {
     @Test
     void guardarOdontologoTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        Odontologo odontologo = new Odontologo("matricula10", "Julián", "Fernandez");
+        Odontologo odontologo = new Odontologo("matricula122", "Carlitos", "Bala");
         Odontologo guardado = odontologoService.registrar(odontologo);
         Assertions.assertNotNull(guardado.getId());
     }
@@ -27,7 +27,7 @@ class OdontologoServiceTest {
     @Test
     void buscarOdontologoExistenteTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        int idOdontologoABuscar = 9;
+        int idOdontologoABuscar = 17;
         Odontologo encontrado = odontologoService.buscar(idOdontologoABuscar);
         Assertions.assertNotNull(encontrado, "El odontólogo debe existir.");
         Assertions.assertEquals(idOdontologoABuscar, encontrado.getId(), "El ID del odontólogo encontrado debe coincidir con el buscado.");
@@ -46,7 +46,7 @@ class OdontologoServiceTest {
     @Test
     void eliminarOdontologoExistenteTest() {
         OdontologoService odontologoService = new OdontologoService(new OdontologoDaoH2());
-        int idOdontologoAEliminar = 4;
+        int idOdontologoAEliminar = 17;
         Odontologo odontologoExistente = odontologoService.buscar(idOdontologoAEliminar);
         Assertions.assertNotNull(odontologoExistente, "El odontólogo debe existir antes de ser eliminado.");
 

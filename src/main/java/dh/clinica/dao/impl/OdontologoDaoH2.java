@@ -11,7 +11,7 @@ import java.util.List;
 public class OdontologoDaoH2 implements Idao<Odontologo> {
 
     private final static String DB_JDBC_DRIVER = "org.h2.Driver";
-    private final static String DB_URL = "jdbc:h2:~/clinica_dh;INIT=RUNSCRIPT FROM 'classpath:init.sql'";
+    private final static String DB_URL = "jdbc:h2:~/clinica_dh;INIT=RUNSCRIPT FROM 'classpath:create.sql'";
 
     private final static String DB_USER = "sa";
     private final static String DB_PASSWORD = "sa";
@@ -127,43 +127,20 @@ public class OdontologoDaoH2 implements Idao<Odontologo> {
         }
     }
 
-    public void actualizarMatricula(int id, String nuevaMatricula) {
-        String sql = "UPDATE odontologos SET matricula = ? WHERE id = ?";
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            preparedStatement.setString(1, nuevaMatricula);
-            preparedStatement.setInt(2, id);
-            preparedStatement.executeUpdate();
-
-            LOGGER.info("Matrícula actualizada a: " + nuevaMatricula);
-        } catch (SQLException e) {
-            LOGGER.error("Error al actualizar la matrícula", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-}
-
-//    public Odontologo buscar(int id) {
-//        String sql = "SELECT * FROM odontologos WHERE id = ?";
+//    public void actualizarMatricula(int id, String nuevaMatricula) {
+//        String sql = "UPDATE odontologos SET matricula = ? WHERE id = ?";
 //        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 //             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 //
-//            preparedStatement.setInt(1, id);
-//            ResultSet resultSet = preparedStatement.executeQuery();
+//            preparedStatement.setString(1, nuevaMatricula);
+//            preparedStatement.setInt(2, id);
+//            preparedStatement.executeUpdate();
 //
-//            if (resultSet.next()) {
-//                return new Odontologo(
-//                        resultSet.getInt("id"),
-//                        resultSet.getString("matricula"),
-//                        resultSet.getString("nombre"),
-//                        resultSet.getString("apellido")
-//                );
-//            }
+//            LOGGER.info("Matrícula actualizada a: " + nuevaMatricula);
 //        } catch (SQLException e) {
-//            LOGGER.error("Error al buscar odontólogo", e);
+//            LOGGER.error("Error al actualizar la matrícula", e);
 //            throw new RuntimeException(e);
 //        }
-//        return null;
 //    }
+
+}

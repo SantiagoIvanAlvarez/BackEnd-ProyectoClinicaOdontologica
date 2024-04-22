@@ -6,14 +6,14 @@ public class Odontologo {
     private String nombre;
     private String apellido;
 
-    // Constructor para crear un nuevo odontólogo antes de guardar en la base de datos
+
     public Odontologo(String matricula, String nombre, String apellido) {
         this.matricula = matricula;
         this.nombre = nombre;
         this.apellido = apellido;
     }
 
-    // Constructor para cargar un odontólogo desde la base de datos
+
     public Odontologo(Integer id, String matricula, String nombre, String apellido) {
         this.id = id;
         this.matricula = matricula;
@@ -21,7 +21,7 @@ public class Odontologo {
         this.apellido = apellido;
     }
 
-    // Getters y setters
+
     public Integer getId() {
         return id;
     }

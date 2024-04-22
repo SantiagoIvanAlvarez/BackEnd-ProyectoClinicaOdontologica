@@ -1,6 +1,6 @@
 package dh.clinica.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Paciente {
     private Integer id;
@@ -8,10 +8,9 @@ public class Paciente {
     private String apellido;
     private String domicilio;
     private String dni;
-    private Date fechaAlta;
+    private LocalDate fechaAlta;
 
-    // Constructor
-    public Paciente(String nombre, String apellido, String domicilio, String dni, Date fechaAlta) {
+    public Paciente(String nombre, String apellido, String domicilio, String dni, LocalDate fechaAlta) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.domicilio = domicilio;
@@ -19,7 +18,16 @@ public class Paciente {
         this.fechaAlta = fechaAlta;
     }
 
-    // Getters y Setters
+    public Paciente(Integer id, String nombre, String apellido, String domicilio, String dni, LocalDate fechaAlta) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.fechaAlta = fechaAlta;
+    }
+
+
     public Integer getId() {
         return id;
     }
@@ -60,11 +68,11 @@ public class Paciente {
         this.dni = dni;
     }
 
-    public Date getFechaAlta() {
+    public LocalDate getFechaAlta() {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(LocalDate fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
 }
